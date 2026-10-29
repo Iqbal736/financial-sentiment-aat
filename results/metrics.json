@@ -1,0 +1,123 @@
+{
+  "dataset": {
+    "test_samples": 518,
+    "class_distribution": {
+      "negative": 63,
+      "neutral": 322,
+      "positive": 133
+    }
+  },
+  "baseline_model": {
+    "name": "TF-IDF (1-2 ngrams, sublinear) + Logistic Regression",
+    "metrics": {
+      "accuracy": 0.8533,
+      "macro_avg": {
+        "precision": 0.8796,
+        "recall": 0.7476,
+        "f1": 0.7943
+      },
+      "weighted_avg": {
+        "precision": 0.8582,
+        "recall": 0.8533,
+        "f1": 0.8456
+      },
+      "per_class": {
+        "negative": {
+          "class_id": 0,
+          "precision": 0.9474,
+          "recall": 0.5714,
+          "f1": 0.7129,
+          "support": 63
+        },
+        "neutral": {
+          "class_id": 1,
+          "precision": 0.8459,
+          "recall": 0.972,
+          "f1": 0.9046,
+          "support": 322
+        },
+        "positive": {
+          "class_id": 2,
+          "precision": 0.8455,
+          "recall": 0.6992,
+          "f1": 0.7654,
+          "support": 133
+        }
+      }
+    },
+    "footprint": {
+      "vocabulary_features": 10000,
+      "parameter_count": 30003,
+      "disk_size_mb": 0.6
+    },
+    "latency": {
+      "total_time_seconds": 0.1112,
+      "ms_per_sample": 0.215,
+      "throughput_samples_per_sec": 4659.0
+    }
+  },
+  "finbert_model": {
+    "name": "ProsusAI/finbert (Domain-adapted BERT)",
+    "device": "cuda",
+    "metrics": {
+      "accuracy": 0.971,
+      "macro_avg": {
+        "precision": 0.9543,
+        "recall": 0.9802,
+        "f1": 0.9664
+      },
+      "weighted_avg": {
+        "precision": 0.973,
+        "recall": 0.971,
+        "f1": 0.9713
+      },
+      "per_class": {
+        "negative": {
+          "class_id": 0,
+          "precision": 0.9394,
+          "recall": 0.9841,
+          "f1": 0.9612,
+          "support": 63
+        },
+        "neutral": {
+          "class_id": 1,
+          "precision": 1.0,
+          "recall": 0.9565,
+          "f1": 0.9778,
+          "support": 322
+        },
+        "positive": {
+          "class_id": 2,
+          "precision": 0.9236,
+          "recall": 1.0,
+          "f1": 0.9603,
+          "support": 133
+        }
+      }
+    },
+    "footprint": {
+      "total_parameters": 109484547,
+      "trainable_parameters": 109484547,
+      "parameter_count_millions": 109.48,
+      "estimated_weights_disk_mb": 438.0
+    },
+    "latency": {
+      "total_time_seconds": 2.5875,
+      "ms_per_sample": 4.995,
+      "throughput_samples_per_sec": 200.19
+    }
+  },
+  "mcnemar_significance_test": {
+    "contingency_table": {
+      "both_correct (n00)": 427,
+      "baseline_correct_finbert_incorrect (n01)": 15,
+      "baseline_incorrect_finbert_correct (n10)": 76,
+      "both_incorrect (n11)": 0
+    },
+    "mcnemar_chi2": 39.5604,
+    "p_value": 0.0,
+    "odds_ratio": 5.0667,
+    "statistically_significant (alpha=0.05)": true,
+    "interpretation": "The performance difference between FinBERT and TF-IDF Baseline is statistically significant (p=0.00000 < 0.05)."
+  }
+}

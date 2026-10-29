@@ -1,0 +1,59 @@
+# Financial Sentiment Analysis Configuration
+# Comparative study: TF-IDF + Logistic Regression vs. ProsusAI/finbert
+
+project:
+  name: "financial-sentiment-aat"
+  title: "Sentiment Classification of Financial News and Earnings Disclosures"
+  seed: 42
+
+data:
+  hf_dataset_name: "financial_phrasebank"
+  subset: "sentences_75agree"
+  raw_path: "data/raw_phrasebank.csv"
+  train_path: "data/train.csv"
+  val_path: "data/val.csv"
+  test_path: "data/test.csv"
+  splits:
+    train_ratio: 0.70
+    val_ratio: 0.15
+    test_ratio: 0.15
+
+labels:
+  id2label:
+    0: "negative"
+    1: "neutral"
+    2: "positive"
+  label2id:
+    "negative": 0
+    "neutral": 1
+    "positive": 2
+  names:
+    - "negative"
+    - "neutral"
+    - "positive"
+
+baseline:
+  model_path: "models/tfidf_logistic.joblib"
+  c_search_grid: [0.1, 0.5, 1.0, 2.0, 5.0, 10.0]
+  tfidf:
+    ngram_range: [1, 2]
+    max_features: 10000
+    sublinear_tf: true
+  logistic_regression:
+    max_iter: 1000
+    solver: "lbfgs"
+    random_state: 42
+
+finbert:
+  model_name: "ProsusAI/finbert"
+  max_length: 128
+  batch_size: 32
+  device: "auto"  # "auto", "cuda", or "cpu"
+
+evaluation:
+  metrics_path: "results/metrics.json"
+  confusion_matrices_path: "results/confusion_matrices.png"
+  error_analysis_path: "results/error_analysis.json"
+  mcnemar:
+    alpha: 0.05
+
